@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Route } from "react-router-dom";
+import ElectionForm from "./components/ElectionForm";
+import SelectParty from "./components/SelectParty";
+import ShowScore from "./components/ShowScore";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route>
+        <header className="App-header">
+          <ShowScore />
+        </header>
+
+        <Route exact path="/" component={ElectionForm} />
+        <Route path="/select-party" component={SelectParty} />
+      </Route>
     </div>
   );
 }
