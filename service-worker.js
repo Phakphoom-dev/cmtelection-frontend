@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/cmtelection-frontend/precache-manifest.944591ba2039e06da9d7e65d5a75296b.js"
+  "/cmtelection-frontend/precache-manifest.03821f1cdad53d68179fbb0d8df69a19.js"
 );
 
 self.addEventListener('message', (event) => {
