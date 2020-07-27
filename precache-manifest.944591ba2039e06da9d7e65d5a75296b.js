@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "88a831337e4e7132bbd2d7f79d1d5dbd",
+    "revision": "143c2f781f856cd36844aa14080d9eb8",
     "url": "/cmtelection-frontend/index.html"
   },
   {
-    "revision": "9f77fa2a5805fef4d4aa",
+    "revision": "c74ddcb0caf51fab46ae",
     "url": "/cmtelection-frontend/static/css/2.6619e73d.chunk.css"
   },
   {
-    "revision": "edc6a4e3060d0930db82",
+    "revision": "5a04d3ebbcc8c82c52f2",
     "url": "/cmtelection-frontend/static/css/main.b3229d83.chunk.css"
   },
   {
-    "revision": "9f77fa2a5805fef4d4aa",
-    "url": "/cmtelection-frontend/static/js/2.784c95d7.chunk.js"
+    "revision": "c74ddcb0caf51fab46ae",
+    "url": "/cmtelection-frontend/static/js/2.f633ee1f.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/cmtelection-frontend/static/js/2.784c95d7.chunk.js.LICENSE.txt"
+    "url": "/cmtelection-frontend/static/js/2.f633ee1f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "edc6a4e3060d0930db82",
-    "url": "/cmtelection-frontend/static/js/main.cfe5cf08.chunk.js"
+    "revision": "5a04d3ebbcc8c82c52f2",
+    "url": "/cmtelection-frontend/static/js/main.e84d3f72.chunk.js"
   },
   {
     "revision": "41fa01b0cc6b54a77a3d",
