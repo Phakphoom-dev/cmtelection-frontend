@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Badge, Form, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import party01 from "../img/partys/Party01.jpg";
 import party02 from "../img/partys/Party02.jpg";
@@ -9,11 +9,12 @@ import party05 from "../img/partys/Party05.jpg";
 import party06 from "../img/partys/Party06.jpg";
 import party07 from "../img/partys/Party07.jpg";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const SelectParty = (props) => {
-  const { id, name, room, isChoose } = props.stdInfo;
-  const [partyType, setPartyType] = useState("");
-
+  const { id, name, room, isChoose, stdType } = props.stdInfo;
+  const [partyType, setPartyType] = useState(0);
+  const [partyScore, setPartyScore] = useState([]);
   const imgSrc = [
     party01,
     party02,
@@ -24,16 +25,59 @@ const SelectParty = (props) => {
     party07,
   ];
 
-  const submitParyHandler = (e) => {
+  useEffect(() => {
+    axios.get(`https://cmt-election.herokuapp.com/api/party`).then((res) => {
+      setPartyScore(res.data);
+    });
+  }, []);
+
+  const getScore = () => {
+    let filterScore = [...partyScore];
+    console.log(filterScore);
+    const score = filterScore.filter((score) => {
+      return score.id == partyType;
+    });
+
+    let partyInfo = {
+      score: score[0].score,
+      _id: score[0]._id,
+      partyName: score[0].name,
+    };
+
+    return partyInfo;
+  };
+
+  const submitParyHandler = async (e) => {
     e.preventDefault();
-    console.log(partyType);
+    const currentPartyInfo = getScore();
+    const { score, _id, partyName } = currentPartyInfo;
+    const stdId = props.stdInfo._id;
+    const url = `https://cmt-election.herokuapp.com/api/party/${_id}/${stdId}/${stdType}/${score}`;
     if (partyType === null || partyType === "" || partyType === undefined) {
       Swal.fire({
         icon: "warning",
         title: "กรุณาตรวจสอบ",
         text: "กรุณาเลือกพรรคที่ต้องการ",
       });
+    } else {
+      Swal.fire({
+        title: `ท่านต้องการจะเลือก ${partyName} หรือไม่`,
+        text: "โปรดตรวจสอบให้แน่ หลังยืนยันแล้วจะไม่สามารถแก้ไขได้",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
+      });
     }
+
+    // const res = await axios.put(url).then((res) => {
+    //   console.log(res);
+    // });
   };
 
   return (
@@ -90,9 +134,13 @@ const SelectParty = (props) => {
           </Row>
         </Container>
       ) : (
-        <Badge variant="secondary" className="p-2">
-          <h1 style={{ color: "white" }}>กรุณากรอกรหัสนักศึกษา</h1>
-        </Badge>
+        <Container className="mt-5">
+          <Row className="justify-content-center align-items-center md-5">
+            <Col xs={6}>
+              <h3>กรุณากรอกรหัสนักศึกษา</h3>
+            </Col>
+          </Row>
+        </Container>
       )}
     </Container>
   );

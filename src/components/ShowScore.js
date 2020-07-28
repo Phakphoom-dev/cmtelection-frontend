@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const ShowScore = () => {
   return (
-    <Container className="md-5 text-center">
+    <Container fluid className="md-5 text-center">
       <Row className="justify-content-center align-items-center">
         <Col>
           <img src={logo} className="App-logo" alt="logo" />
