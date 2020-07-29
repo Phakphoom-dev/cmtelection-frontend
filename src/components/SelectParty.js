@@ -10,11 +10,13 @@ import party06 from "../img/partys/Party06.jpg";
 import party07 from "../img/partys/Party07.jpg";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { Ring } from "react-spinners-css";
 
 const SelectParty = (props) => {
   const { id, name, room, isChoose, stdType } = props.stdInfo;
   const [partyType, setPartyType] = useState(0);
   const [partyScore, setPartyScore] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const imgSrc = [
     party01,
     party02,
@@ -67,22 +69,51 @@ const SelectParty = (props) => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "ยืนยัน",
+        cancelButtonText: "ยกเลิก",
+        allowOutsideClick: false,
       }).then((result) => {
         if (result.value) {
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          setIsLoading(true);
+          const res = axios
+            .put(url)
+            .then((res) => {
+              console.log(res);
+              setIsLoading(false);
+              Swal.fire({
+                title: `บันทึกข้อมูลสำเร็จ`,
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "ยืนยัน",
+                allowOutsideClick: false,
+              }).then((result) => {
+                if (result) {
+                  window.location.reload();
+                }
+              });
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              Swal.fire({
+                icon: "error",
+                title: "เกิดข้อผิดพลาด",
+                text: "กรุณาลองใหม่อีกครั้งหรือติดต่อผู้ดูแล",
+              });
+              console.log(err);
+            });
         }
       });
     }
-
-    // const res = await axios.put(url).then((res) => {
-    //   console.log(res);
-    // });
   };
 
   return (
     <Container className="mt-5">
-      {isChoose ? (
+      {isLoading ? (
+        <Container style={{ marginTop: "3rem" }}>
+          <Ring size={300} color="#282c34" />
+        </Container>
+      ) : isChoose ? (
         <Redirect push to="/" />
       ) : id !== undefined ? (
         <Container>
